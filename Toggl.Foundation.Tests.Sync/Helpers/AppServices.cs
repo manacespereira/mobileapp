@@ -71,8 +71,6 @@ namespace Toggl.Foundation.Tests.Sync.Helpers
                 database,
                 TimeService,
                 createSyncManager,
-                NotificationServiceSubstitute,
-                ApplicationShortcutCreatorSubstitute,
                 AnalyticsServiceSubstitute);
 
             SyncManager = togglDataSource.SyncManager;
