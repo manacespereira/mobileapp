@@ -35,11 +35,6 @@ namespace Toggl.Foundation.Tests.Sync.Helpers
 
         public ILastTimeUsageStorage LastTimeUsageStorageSubstitute { get; } = Substitute.For<ILastTimeUsageStorage>();
 
-        public INotificationService NotificationServiceSubstitute { get; } = Substitute.For<INotificationService>();
-
-        public IApplicationShortcutCreator ApplicationShortcutCreatorSubstitute { get; } =
-            Substitute.For<IApplicationShortcutCreator>();
-
         public ISyncManager SyncManager { get; }
 
         public AppServices(ITogglApi api, ITogglDatabase database)
