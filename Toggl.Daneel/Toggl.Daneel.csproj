@@ -588,8 +588,6 @@
     <InterfaceDefinition Include="ViewControllers\TokenResetViewController.xib" />
     <InterfaceDefinition Include="ViewControllers\ReportsViewController.xib" />
     <InterfaceDefinition Include="Views\Color\ColorSelectionViewCell.xib" />
-    <InterfaceDefinition Include="Views\Log\TimeEntriesLogHeaderView.xib" />
-    <InterfaceDefinition Include="Views\Log\TimeEntriesLogViewCell.xib" />
     <InterfaceDefinition Include="Views\StartTimeEntry\ProjectSuggestionViewCell.xib" />
     <InterfaceDefinition Include="Views\StartTimeEntry\StartTimeEntryEmptyViewCell.xib" />
     <InterfaceDefinition Include="Views\StartTimeEntry\StartTimeEntryViewCell.xib" />
@@ -646,6 +644,8 @@
     <InterfaceDefinition Include="Cells\Settings\UpcomingEventsOptionCell.xib" />
     <InterfaceDefinition Include="ViewControllers\SelectDefaultWorkspaceViewController.xib" />
     <InterfaceDefinition Include="Cells\SelectDefaultWorkspaceTableViewCell.xib" />
+    <InterfaceDefinition Include="Cells\TimeEntriesLog\TimeEntriesLogHeaderView.xib" />
+    <InterfaceDefinition Include="Cells\TimeEntriesLog\TimeEntriesLogViewCell.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -854,14 +854,6 @@
       <DependentUpon>ColorSelectionViewCell.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Color\HueSaturationPickerView.cs" />
-    <Compile Include="Views\Log\TimeEntriesLogHeaderView.cs" />
-    <Compile Include="Views\Log\TimeEntriesLogHeaderView.designer.cs">
-      <DependentUpon>TimeEntriesLogHeaderView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Log\TimeEntriesLogViewCell.cs" />
-    <Compile Include="Views\Log\TimeEntriesLogViewCell.designer.cs">
-      <DependentUpon>TimeEntriesLogViewCell.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\StartTimeEntry\ProjectSuggestionViewCell.cs" />
     <Compile Include="Views\StartTimeEntry\ProjectSuggestionViewCell.designer.cs">
       <DependentUpon>ProjectSuggestionViewCell.cs</DependentUpon>
@@ -1180,6 +1172,14 @@
     <Compile Include="PlatformInfoIos.cs" />
     <Compile Include="Services\BackgroundSyncServiceIos.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
+    <Compile Include="Cells\TimeEntriesLog\TimeEntriesLogHeaderView.cs" />
+    <Compile Include="Cells\TimeEntriesLog\TimeEntriesLogHeaderView.designer.cs">
+      <DependentUpon>TimeEntriesLogHeaderView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cells\TimeEntriesLog\TimeEntriesLogViewCell.cs" />
+    <Compile Include="Cells\TimeEntriesLog\TimeEntriesLogViewCell.designer.cs">
+      <DependentUpon>TimeEntriesLogViewCell.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Toggl.Foundation.MvvmCross\Toggl.Foundation.MvvmCross.csproj">
@@ -1265,6 +1265,7 @@
     <Folder Include="Cells\Calendar\" />
     <Folder Include="Resources\Images.xcassets\icCalendarSmall.imageset\" />
     <Folder Include="Resources\Images.xcassets\stripes.imageset\" />
+    <Folder Include="Cells\TimeEntriesLog\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="GoogleService-Info.plist" />
