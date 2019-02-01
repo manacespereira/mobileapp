@@ -2,6 +2,8 @@
 using MvvmCross;
 using MvvmCross.Platforms.Ios.Presenters.Attributes;
 using MvvmCross.Plugin.Color.Platforms.Ios;
+using Toggl.Daneel.Extensions;
+using Toggl.Daneel.Extensions.Reactive;
 using Toggl.Daneel.ViewSources;
 using Toggl.Foundation.MvvmCross.ViewModels.Settings;
 using Toggl.Multivac;
@@ -36,20 +38,19 @@ namespace Toggl.Daneel.ViewControllers.Settings
             header.WidthAnchor.ConstraintEqualTo(UserCalendarsTableView.WidthAnchor).Active = true;
             header.SetCalendarPermissionStatus(ViewModel.PermissionGranted);
 
-            var source = new SelectUserCalendarsTableViewSource(
-                UserCalendarsTableView, schedulerProvider);
+            var source = new SelectUserCalendarsTableViewSource(UserCalendarsTableView);
             source.SectionHeaderBackgroundColor = Color.Settings.Background.ToNativeColor();
             UserCalendarsTableView.Source = source;
 
             ViewModel.Calendars
-                .Subscribe(calendars => source.ChangeData(UserCalendarsTableView, calendars))
+                .Subscribe(UserCalendarsTableView.Rx().Sections(source))
                 .DisposedBy(DisposeBag);
 
             header.EnableCalendarAccessTapped
                 .Subscribe(ViewModel.RequestAccess.Inputs)
                 .DisposedBy(DisposeBag);
 
-            source.ItemSelected
+            source.Rx().ModelSelected()
                 .Subscribe(ViewModel.SelectCalendar.Inputs)
                 .DisposedBy(DisposeBag);
         }

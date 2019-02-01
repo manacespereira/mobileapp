@@ -741,6 +741,8 @@ namespace Toggl.Foundation.MvvmCross.ViewModels
             var firstSuggestion = suggestions.FirstOrDefault();
             if (firstSuggestion is ProjectSuggestion)
                 return suggestions
+                    .Cast<ProjectSuggestion>()
+                    .OrderBy(ps => ps.ProjectName)
                     .GroupByWorkspaceAddingNoProject()
                     .OrderByDefaultWorkspaceAndName(defaultWorkspace?.Id ?? 0);
 

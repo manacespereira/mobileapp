@@ -1874,6 +1874,7 @@ namespace Toggl.Foundation.Tests.MvvmCross.ViewModels
 
             private ProjectSuggestion getProjectSuggestion(int projectId, int workspaceId, IEnumerable<IThreadSafeTask> tasks)
             {
+
                 var workspace = Substitute.For<IThreadSafeWorkspace>();
                 workspace.Name.Returns($"Workspace{workspaceId}");
                 workspace.Id.Returns(workspaceId);
@@ -1884,6 +1885,9 @@ namespace Toggl.Foundation.Tests.MvvmCross.ViewModels
                 project.Tasks.Returns(tasks);
                 return new ProjectSuggestion(project);
             }
+
+            private IEnumerable<string> projectNames(IEnumerable<AutocompleteSuggestion> autocompleteSuggestions)
+                => autocompleteSuggestions.Cast<ProjectSuggestion>().Select(suggestion => suggestion.ProjectName);
 
             private IEnumerable<string> tasksNames(IEnumerable<AutocompleteSuggestion> autocompleteSuggestions)
                 => autocompleteSuggestions.Cast<TaskSuggestion>().Select(suggestion => suggestion.Name);
@@ -1954,6 +1958,24 @@ namespace Toggl.Foundation.Tests.MvvmCross.ViewModels
             }
 
             [Fact, LogIfTooSlow]
+            public async Task SortsProjectsByName()
+            {
+                var suggestions = new List<ProjectSuggestion>();
+                suggestions.Add(getProjectSuggestion(3, 0));
+                suggestions.Add(getProjectSuggestion(4, 1));
+                suggestions.Add(getProjectSuggestion(1, 0));
+                suggestions.Add(getProjectSuggestion(33, 1));
+                suggestions.Add(getProjectSuggestion(10, 1));
+                var suggestionsObservable = Observable.Return(suggestions);
+                AutocompleteProvider.Query(Arg.Any<QueryInfo>()).Returns(suggestionsObservable);
+                ViewModel.Prepare();
+                TestScheduler.Start();
+
+                ViewModel.Suggestions.Should().HaveCount(2);
+                projectNames(ViewModel.Suggestions[0]).Should().BeInAscendingOrder();
+                projectNames(ViewModel.Suggestions[1]).Should().BeInAscendingOrder();
+            }
+          
             public async Task SortsTasksByName()
             {
                 var suggestions = new List<ProjectSuggestion>();

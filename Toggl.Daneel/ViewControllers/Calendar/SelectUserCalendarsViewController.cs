@@ -41,14 +41,14 @@ namespace Toggl.Daneel.ViewControllers.Calendar
             DescriptionLabel.Text = Resources.SelectCalendarsDescription;
             DoneButton.SetTitle(Resources.Done, UIControlState.Normal);
 
-            var source = new SelectUserCalendarsTableViewSource(TableView, schedulerProvider);
+            var source = new SelectUserCalendarsTableViewSource(TableView);
             TableView.Source = source;
 
             DoneButton.Rx()
                 .BindAction(ViewModel.Done)
                 .DisposedBy(DisposeBag);
 
-            source.ItemSelected
+            source.Rx().ModelSelected()
                 .Subscribe(ViewModel.SelectCalendar.Inputs)
                 .DisposedBy(DisposeBag);
 
@@ -62,7 +62,7 @@ namespace Toggl.Daneel.ViewControllers.Calendar
                 .DisposedBy(DisposeBag);
 
             ViewModel.Calendars
-                .Subscribe(calendars => source.ChangeData(TableView, calendars))
+                .Subscribe(TableView.Rx().Sections(source))
                 .DisposedBy(DisposeBag);
         }
 

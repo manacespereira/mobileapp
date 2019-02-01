@@ -6,9 +6,9 @@ using UIKit;
 
 namespace Toggl.Daneel.Cells.Calendar
 {
-    public sealed partial class SelectableUserCalendarViewCell
-        : BaseTableViewCell<SelectableUserCalendarViewModel>
+    public sealed partial class SelectableUserCalendarViewCell : BaseTableViewCell<SelectableUserCalendarViewModel>
     {
+        public static readonly string Identifier = nameof(SelectableUserCalendarViewCell);
         public static readonly NSString Key = new NSString(nameof(SelectableUserCalendarViewCell));
         public static readonly UINib Nib;
 

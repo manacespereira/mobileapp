@@ -44,7 +44,11 @@ namespace Toggl.Foundation.Sync
             Ensure.Argument.IsNotNull(result, nameof(result));
 
             transitionHandlers.TryGetValue(result, out var transitionHandler);
-            analyticsService.SyncStateTransition.Track(transitionHandler.stateName);
+            if (transitionHandler.stateName != null)
+            {
+                analyticsService.SyncStateTransition.Track(transitionHandler.stateName);
+            }
+
             return transitionHandler.handler;
         }
     }
