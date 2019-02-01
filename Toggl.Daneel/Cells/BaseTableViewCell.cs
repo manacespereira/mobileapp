@@ -29,7 +29,7 @@ namespace Toggl.Daneel.Cells
 
         protected abstract void UpdateView();
 
-        public static ReloadTableViewSource<TModel>.CellConfiguration CellConfiguration(string cellIdentifier)
+        public static CellConfiguration<TModel> CellConfiguration(string cellIdentifier)
         {
             return (tableView, indexPath, model) =>
             {

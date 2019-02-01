@@ -5,6 +5,7 @@ using System.Reactive;
 using Foundation;
 using Toggl.Daneel.Cells;
 using Toggl.Daneel.ViewSources;
+using Toggl.Foundation.MvvmCross.Collections;
 using Toggl.Foundation.MvvmCross.Reactive;
 using UIKit;
 
@@ -16,18 +17,18 @@ namespace Toggl.Daneel.Extensions.Reactive
             where TCell : BaseTableViewCell<TModel>
             => new ReactiveTableViewBinder<TModel, TCell>(tableView.Base, dataSource);
 
-        public static IObserver<IImmutableList<IImmutableList<TModel>>> Sections<TModel>(
-            this IReactive<UITableView> reactive, ReloadTableViewSource<TModel> dataSource)
+        public static IObserver<IImmutableList<CollectionSection<THeader, TModel>>> Sections<THeader, TModel>(
+            this IReactive<UITableView> reactive, ReloadTableViewSource<THeader, TModel> dataSource)
         {
-            return Observer.Create<IImmutableList<IImmutableList<TModel>>>(list =>
+            return Observer.Create<IImmutableList<CollectionSection<THeader, TModel>>>(list =>
             {
                 dataSource.SetItems(list);
                 reactive.Base.ReloadData();
             });
         }
 
-        public static IObserver<IEnumerable<TModel>> Items<TModel>(
-            this IReactive<UITableView> reactive, ReloadTableViewSource<TModel> dataSource)
+        public static IObserver<IEnumerable<TModel>> Items<THeader, TModel>(
+            this IReactive<UITableView> reactive, ReloadTableViewSource<THeader, TModel> dataSource)
         {
             return Observer.Create<IEnumerable<TModel>>(list =>
             {

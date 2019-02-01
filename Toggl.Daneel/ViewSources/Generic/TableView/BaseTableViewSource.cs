@@ -2,34 +2,35 @@ using System;
 using System.Collections.Immutable;
 using CoreGraphics;
 using Foundation;
+using Toggl.Foundation.MvvmCross.Collections;
 using UIKit;
 
 namespace Toggl.Daneel.ViewSources
 {
-    public abstract class BaseTableViewSource<TModel> : UITableViewSource
+    public delegate UITableViewCell CellConfiguration<TModel>(UITableView tableView, NSIndexPath indexPath, TModel model);
+    public delegate UIView HeaderConfiguration<THeader>(UITableView tableView, int section, THeader header);
+
+    public abstract class BaseTableViewSource<THeader, TModel> : UITableViewSource
     {
-        public delegate UITableViewCell CellConfiguration(UITableView tableView, NSIndexPath indexPath, TModel model);
-        public delegate UIView HeaderConfiguration(UITableView tableView, int section);
+        private readonly CellConfiguration<TModel> configureCell;
 
-        private readonly CellConfiguration configureCell;
-
-        protected IImmutableList<IImmutableList<TModel>> Sections { get; set; }
+        protected IImmutableList<CollectionSection<THeader, TModel>> Sections { get; set; }
 
         public EventHandler<TModel> OnItemTapped { get; set; }
         public EventHandler<CGPoint> OnScrolled { get; set; }
 
-        public HeaderConfiguration ConfigureHeader { get; set; }
+        public HeaderConfiguration<THeader> ConfigureHeader { get; set; }
 
-        public BaseTableViewSource(CellConfiguration configureCell, IImmutableList<IImmutableList<TModel>> sections)
+        public BaseTableViewSource(CellConfiguration<TModel> configureCell, IImmutableList<CollectionSection<THeader, TModel>> sections)
         {
-            this.Sections = sections;
+            Sections = sections;
             this.configureCell = configureCell;
         }
 
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
             tableView.DeselectRow(indexPath, true);
-            OnItemTapped?.Invoke(this, Sections[indexPath.Section][indexPath.Row]);
+            OnItemTapped?.Invoke(this, Sections[indexPath.Section].Items[indexPath.Row]);
         }
 
         public override void Scrolled(UIScrollView scrollView)
@@ -41,12 +42,12 @@ namespace Toggl.Daneel.ViewSources
             => Sections.Count;
 
         public override nint RowsInSection(UITableView tableview, nint section)
-            => Sections[(int)section].Count;
+            => Sections[(int)section].Items.Count;
 
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
-            => configureCell(tableView, indexPath, Sections[indexPath.Section][indexPath.Row]);
+            => configureCell(tableView, indexPath, Sections[indexPath.Section].Items[indexPath.Row]);
 
         public override UIView GetViewForHeader(UITableView tableView, nint section)
-            => ConfigureHeader == null ? null : ConfigureHeader(tableView, (int)section);
+            => ConfigureHeader == null ? null : ConfigureHeader(tableView, (int)section, Sections[(int)section].Header);
     }
 }
