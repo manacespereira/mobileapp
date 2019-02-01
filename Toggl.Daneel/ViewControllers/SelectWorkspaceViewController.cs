@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Toggl.Daneel.Extensions;
@@ -35,7 +36,7 @@ namespace Toggl.Daneel.ViewControllers
             WorkspaceTableView.SeparatorStyle = UITableViewCellSeparatorStyle.None;
             WorkspaceTableView.RegisterNibForCellReuse(WorkspaceViewCell.Nib, WorkspaceViewCell.Identifier);
 
-            var source = new ReloadTableViewSource<SelectableWorkspaceViewModel>(
+            var source = new ReloadTableViewSource<Unit, SelectableWorkspaceViewModel>(
                 WorkspaceViewCell.CellConfiguration(WorkspaceViewCell.Identifier),
                 ViewModel.Workspaces.ToImmutableList()
             );

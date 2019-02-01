@@ -1,4 +1,5 @@
-﻿using System.Reactive.Disposables;
+﻿using System.Reactive;
+using System.Reactive.Disposables;
 using System.Threading.Tasks;
 using Toggl.Daneel.Extensions;
 using Toggl.Daneel.Extensions.Reactive;
@@ -38,7 +39,7 @@ namespace Toggl.Daneel.ViewControllers
             DurationFormatsTableView.RowHeight = rowHeight;
             DurationFormatsTableView.RegisterNibForCellReuse(DurationFormatViewCell.Nib, DurationFormatViewCell.Identifier);
 
-            var source = new ReloadTableViewSource<SelectableDurationFormatViewModel>(
+            var source = new ReloadTableViewSource<Unit, SelectableDurationFormatViewModel>(
                 DurationFormatViewCell.CellConfiguration(DurationFormatViewCell.Identifier),
                 ViewModel.DurationFormats
             );

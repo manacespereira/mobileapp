@@ -34,8 +34,8 @@ namespace Toggl.Daneel.ViewControllers
             CountriesTableView.SeparatorStyle = UITableViewCellSeparatorStyle.None;
             CountriesTableView.RegisterNibForCellReuse(CountryViewCell.Nib, CountryViewCell.Identifier);
             CountriesTableView.RowHeight = rowHeight;
-            
-            var source = new ReloadTableViewSource<SelectableCountryViewModel>(
+
+            var source = new ReloadTableViewSource<string, SelectableCountryViewModel>(
                 CountryViewCell.CellConfiguration(CountryViewCell.Identifier)
             );
             CountriesTableView.Source = source;

@@ -1,4 +1,5 @@
-﻿using CoreGraphics;
+﻿using System.Reactive;
+using CoreGraphics;
 using Foundation;
 using Toggl.Daneel.Cells;
 using Toggl.Daneel.Presentation.Attributes;
@@ -30,7 +31,7 @@ namespace Toggl.Daneel.ViewControllers
             View.ClipsToBounds = true;
 
             WorkspacesTableView.RegisterNibForCellReuse(SelectDefaultWorkspaceTableViewCell.Nib, SelectDefaultWorkspaceTableViewCell.Identifier);
-            var tableViewSource = new ReloadTableViewSource<SelectableWorkspaceViewModel>(
+            var tableViewSource = new ReloadTableViewSource<Unit, SelectableWorkspaceViewModel>(
                 SelectDefaultWorkspaceTableViewCell.CellConfiguration(SelectDefaultWorkspaceTableViewCell.Identifier),
                 ViewModel.Workspaces
             );

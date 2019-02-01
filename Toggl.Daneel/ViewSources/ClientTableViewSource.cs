@@ -10,7 +10,7 @@ using UIKit;
 
 namespace Toggl.Daneel.ViewSources
 {
-    public sealed class ClientTableViewSource : ReloadTableViewSource<SelectableClientBaseViewModel>
+    public sealed class ClientTableViewSource : ReloadTableViewSource<string, SelectableClientBaseViewModel>
     {
         private const int rowHeight = 48;
 
@@ -19,7 +19,7 @@ namespace Toggl.Daneel.ViewSources
             tableView.RowHeight = rowHeight;
         }
 
-        private static UITableViewCell configureCell(UITableView tableView, NSIndexPath indexPath, SelectableClientBaseViewModel model)
+        private static UITableViewCell configureCell<SelectableClientBaseViewModel>(UITableView tableView, NSIndexPath indexPath, SelectableClientBaseViewModel model)
         {
             var identifier = model is SelectableClientCreationViewModel ? CreateClientViewCell.Identifier : ClientViewCell.Identifier;
             var cell = (BaseTableViewCell<SelectableClientBaseViewModel>)tableView.DequeueReusableCell(identifier);

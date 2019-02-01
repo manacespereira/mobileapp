@@ -36,7 +36,7 @@ namespace Toggl.Daneel.ViewControllers
             DateFormatsTableView.RegisterNibForCellReuse(DateFormatViewCell.Nib, DateFormatViewCell.Identifier);
             DateFormatsTableView.RowHeight = rowHeight;
 
-            var source = new ReloadTableViewSource<SelectableDateFormatViewModel>(
+            var source = new ReloadTableViewSource<string, SelectableDateFormatViewModel>(
                 DateFormatViewCell.CellConfiguration(DateFormatViewCell.Identifier),
                 ViewModel.DateTimeFormats
             );
