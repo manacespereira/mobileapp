@@ -7,7 +7,7 @@ using UIKit;
 
 namespace Toggl.Daneel.ViewSources
 {
-    public sealed class SelectUserCalendarsTableViewSource : ReloadTableViewSource<SelectableUserCalendarViewModel>
+    public sealed class SelectUserCalendarsTableViewSource : ReloadTableViewSource<string, SelectableUserCalendarViewModel>
     {
         private const int rowHeight = 48;
         private const int headerHeight = 48;
@@ -36,10 +36,10 @@ namespace Toggl.Daneel.ViewSources
             tableView.DeselectRow(indexPath, true);
         }
 
-        private UIView viewForHeaderInSection(UITableView tableView, int section)
+        private UIView viewForHeaderInSection(UITableView tableView, int section, string sourceName)
         {
             var header = tableView.DequeueReusableHeaderFooterView(UserCalendarListHeaderViewCell.Identifier) as UserCalendarListHeaderViewCell;
-            header.Item = Sections[section].First().SourceName;
+            header.Item = sourceName;
             header.ContentView.BackgroundColor = SectionHeaderBackgroundColor;
             return header;
         }
